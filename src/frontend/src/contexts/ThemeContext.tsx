@@ -4,6 +4,7 @@ import { MantineProvider, createTheme } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { ContextMenuProvider } from 'mantine-contextmenu';
+import { useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { AboutInvenTreeModal } from '../components/modals/AboutInvenTreeModal';
 import { LicenseModal } from '../components/modals/LicenseModal';
@@ -34,6 +35,28 @@ export function ThemeContext({
       xl: '90em'
     }
   });
+
+  // Sync Mantine colour scheme with the Tailwind `dark` class so Shadcn
+  // components respond to dark-mode automatically.
+  useEffect(() => {
+    const stored = colorSchema.get('auto');
+    const isDark =
+      stored === 'dark' ||
+      (stored === 'auto' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.classList.toggle('dark', isDark);
+
+    // Keep in sync when the OS preference changes while the app is open
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      const current = colorSchema.get('auto');
+      if (current === 'auto') {
+        document.documentElement.classList.toggle('dark', e.matches);
+      }
+    };
+    mq.addEventListener('change', handleChange);
+    return () => mq.removeEventListener('change', handleChange);
+  }, [userTheme]);
 
   return (
     <MantineProvider theme={myTheme} colorSchemeManager={colorSchema}>

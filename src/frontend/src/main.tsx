@@ -15,6 +15,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMClient from 'react-dom/client';
 import './styles/overrides.css';
+// Shadcn/ui global CSS variables and Tailwind utilities (imported after Mantine to take priority)
+import './styles/globals.css';
 
 // Lingui imports (required for plugin translation)
 import * as LinguiCore from '@lingui/core';
