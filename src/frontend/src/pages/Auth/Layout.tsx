@@ -1,16 +1,17 @@
 import { Trans } from '@lingui/react/macro';
-import { Center, Container, Loader } from '@mantine/core';
-import * as React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle
-} from '../../components/ui/card';
-import { Button } from '../../components/ui/button';
-import { Separator } from '../../components/ui/separator';
+  Button,
+  Center,
+  Container,
+  Divider,
+  Group,
+  Loader,
+  Paper,
+  Stack
+} from '@mantine/core';
+import { Outlet, useNavigate } from 'react-router-dom';
 import SplashScreen from '../../components/SplashScreen';
+import { StylishText } from '../../components/items/StylishText';
 import { doLogout } from '../../functions/auth';
 
 export default function LoginLayoutComponent() {
@@ -41,33 +42,25 @@ export function Wrapper({
   const navigate = useNavigate();
 
   return (
-    <Card className='shadcn-scope min-w-[425px] shadow-lg'>
-      <CardHeader className={smallPadding ? 'pb-0' : undefined}>
-        <CardTitle className='text-2xl font-bold text-brand-gradient'>
-          {titleText}
-        </CardTitle>
-        <Separator />
-      </CardHeader>
-      <CardContent className={smallPadding ? 'pt-2' : undefined}>
+    <Paper p='xl' withBorder miw={425} shadow='lg'>
+      <Stack gap={smallPadding ? 0 : 'md'}>
+        <StylishText size='xl'>{titleText}</StylishText>
+        <Divider p='xs' />
         {loader && (
-          <div className='flex justify-center py-4'>
+          <Group justify='center'>
             <Loader />
-          </div>
+          </Group>
         )}
         {children}
         {logOff && (
           <>
-            <Separator className='my-4' />
-            <Button
-              variant='destructive'
-              className='w-full'
-              onClick={() => doLogout(navigate)}
-            >
+            <Divider p='xs' />
+            <Button onClick={() => doLogout(navigate)} color='red'>
               <Trans>Log off</Trans>
             </Button>
           </>
         )}
-      </CardContent>
-    </Card>
+      </Stack>
+    </Paper>
   );
 }
