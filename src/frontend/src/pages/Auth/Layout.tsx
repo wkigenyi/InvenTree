@@ -43,7 +43,7 @@ export function Wrapper({
   return (
     <Card className='shadcn-scope min-w-[425px] shadow-lg'>
       <CardHeader className={smallPadding ? 'pb-0' : undefined}>
-        <CardTitle className='text-2xl font-bold bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent'>
+        <CardTitle className='text-2xl font-bold text-brand-gradient'>
           {titleText}
         </CardTitle>
         <Separator />

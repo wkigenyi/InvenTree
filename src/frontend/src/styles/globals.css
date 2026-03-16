@@ -75,3 +75,10 @@
     border-color: hsl(var(--border));
   }
 }
+
+@layer utilities {
+  /* Reusable brand gradient text – applies the InvenTree primary colour gradient */
+  .text-brand-gradient {
+    @apply bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent;
+  }
+}
